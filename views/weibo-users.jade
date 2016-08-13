@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  ul.users
+    each user in users
+      li
+        a(href="/weibo/user/#{user.uid}")
+          img(src="#{user.img}")
+          | #{user.username}
+
+

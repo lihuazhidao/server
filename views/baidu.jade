@@ -1,0 +1,13 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  ul
+    each list in news
+      li
+        p
+          a(href=list.url,target="_blank")  #{list.title}
+          span 时间: #{new　Date(list.publicTime*1000)}
+          span 来源  #{list.author}
+        p #{list.abs}

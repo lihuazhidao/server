@@ -1,0 +1,28 @@
+extends layout
+
+block content
+  h1= title
+  ul.user
+    li.username
+      img(src="#{user.img}")
+    li #{user.username}
+    li.fans 粉丝： #{user.fans}
+    li.weibo 微博：#{user.weibo}
+    li.views 关注： #{user.views}
+    li.missing 采集丢失：#{user.missing}
+    li.desc 简介: #{user.desc}
+
+  ul.weibo-lists
+    each list in user.weiboList
+      li
+        p.content
+          a(href="http://m.weibo.cn/#{user.uid}/#{list.bid}") !{list.text}
+        p.info
+          span.source 来自： #{list.source}
+          span.created 时间： #{list.created_at}
+          span.likes 点赞： #{list.attitudes_count}
+          span.forwards 转发：#{list.reposts_count}
+          span.comment 评论： #{list.comments_count}
+
+
+
