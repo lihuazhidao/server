@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>data-collect</name>
+=======
+	<name>server</name>
+>>>>>>> 9ff1049e467cf0197f87e946ac8153d02d52f598
 	<comment></comment>
 	<projects>
 	</projects>

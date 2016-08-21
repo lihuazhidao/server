@@ -35,11 +35,35 @@ router.get("/checkuser/:uid",function(req,res,next){
             res.json({
                 msg:"用户已经创建",
                 state:true,
-                missing:exsit.missing
+                missing:exsit.missing,
+                hasCollect:exsit.weiboList.length,
+                total:exsit.weibo
             });
         }
     });
 });
+
+
+
+
+router.get("/checkuser/:uid/:bid",function(req,res,next){
+	
+	var uid=req.params.uid;
+	var bid=req.params.bid;
+    if(!uid || !bid){
+        res.render('index', { title: 'User' });
+    }
+    
+    
+    WeiboUser.findOne({
+        'uid':uid
+    },function (err,exsit) {
+    	
+    })
+	
+})
+
+
 
 
 
