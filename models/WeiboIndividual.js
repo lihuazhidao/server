@@ -23,7 +23,12 @@ var weiboIndividualSchema=mongoose.Schema({
                                        pic_ids:[String],
                                        pics:[pictureSchema],
                                        comments:[],//评论内容
-                                       reposts:[]//转发内容
+                                       reposts:[],//转发内容,
+										hasCollectComment:Number,
+										hasCollectRepost:Number,
+										missingComment:Number,
+										missingRepost:Number
+
                                 });
 
 

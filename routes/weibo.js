@@ -45,8 +45,8 @@ router.get("/checkuser/:uid",function(req,res,next){
 
 
 
-
-router.get("/checkuser/:uid/:bid",function(req,res,next){
+//  检测该条微博是否已经存在
+router.get("/checkweibo/:uid/:bid",function(req,res,next){
 	
 	var uid=req.params.uid;
 	var bid=req.params.bid;
@@ -56,12 +56,102 @@ router.get("/checkuser/:uid/:bid",function(req,res,next){
     
     
     WeiboUser.findOne({
-        'uid':uid
-    },function (err,exsit) {
+        'uid':uid,
+        'weiboList':{
+        	'$elemMatch':{
+        		'bid':bid
+        	}
+        }
+    },'weiboList',function (err,exsit) {
+
+    	if(err){
+    		 res.send('server err',JSON.stringify(err)); 
+    	}
     	
+    	if(!exsit){
+    		res.json({
+   			 msg:'未在该用户下查询到此条微博',
+   			 state:false
+   		 })
+    	}
+    
+    	var lists=exsit.weiboList;
+    		
+    	var targetWeibo;
+    	_.each(lists,function(list){
+    		if(list.bid==bid){
+    			targetWeibo=list;
+    		}
+    	})
+    	
+    	res.json({
+    		state:true,
+    		data:targetWeibo
+    	});
     })
 	
 })
+
+
+
+//创建该用户下的一条微博
+router.post("/createWeibo/:uid",function(req,res,next){
+
+	var uid=req.params.uid;
+	var weibo=req.body.weibo
+	
+console.log(weibo)
+	
+	
+	WeiboUser.findOne({
+        'uid':uid
+    },function (err,exsit) {
+  
+    	
+        if(err){
+            res.send('server err',JSON.stringify(err));
+        }
+        
+        if(!exsit){
+        	 //用户已经存在
+            res.json({
+                "msg":"用户不存在",
+                "state":false
+            });
+        }else{
+        	var user=exsit;
+        	
+        	var lists=user.weiboList;
+        		lists=lists.concat(weibo);
+        		lists=_.unionBy(lists,"bid");
+        	
+        		console.log(lists)
+        	user.weiboList=lists;
+        	
+        	
+        	
+        	
+        
+            var weiboUser=new WeiboUser(user);
+            weiboUser.save(function (err,saveUser) {
+	            if(err){
+	                res.send('server err',JSON.stringify(err));
+	            }
+	            res.json({
+	                "msg":"微博保存成功",
+	                "state":true
+	            })
+            });
+        }
+        
+     
+        
+    
+    })
+	
+	
+	
+});
 
 
 

@@ -67,7 +67,11 @@ var weiboPieceSchema=mongoose.Schema({
         commentsCount:Number,
         praiseCount:Number,
         comments:[weiboCommentSchema],
-        reposts:[weiboRepostSchema]
+        reposts:[weiboRepostSchema],
+        hasCollectComment:Number,
+        hasCollectRepost:Number,
+        missingComment:Number,
+        missingRepost:Number
 });
 
 
